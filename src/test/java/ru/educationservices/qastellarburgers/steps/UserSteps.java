@@ -37,7 +37,7 @@ public class UserSteps {
                 .post("/login");
     }
 
-    @Step("Обновление полей пользователя с заданным токеном")
+    @Step("Обновить переданные поля пользователя с передачей токена")
     public Response updateUserWithToken(String accessToken, User updatedFields) {
         return RestAssured.given()
                 .header("Content-type", "application/json")
@@ -47,7 +47,7 @@ public class UserSteps {
                 .patch("/user");
     }
 
-    @Step("Обновление полей пользователя без токена")
+    @Step("Обновить переданные поля пользователя без передачи токена")
     public Response updateUserWithoutToken(User updatedFields) {
         return RestAssured.given()
                 .header("Content-type", "application/json")
@@ -70,7 +70,7 @@ public class UserSteps {
                 .statusCode(anyOf(equalTo(200), equalTo(202)));
     }
 
-    @Step("Удалить пользователя")
+    @Step("Получить токен пользователя и удалить пользователя")
     public void deleteUser() {
         Response loginResponse = loginUser();
         if (loginResponse.getStatusCode() != 200) {
