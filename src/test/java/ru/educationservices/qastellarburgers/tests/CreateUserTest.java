@@ -1,6 +1,7 @@
 package ru.educationservices.qastellarburgers.tests;
 
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +20,7 @@ public class CreateUserTest {
     private String uniqueEmail;
     private final UserSteps userSteps = new UserSteps();
 
+    private String userWithFullDataAccessToken;
 
     private static final String PASSWORD = "TestPassword123.";
     private static final String NAME = "TestName";
@@ -36,15 +38,18 @@ public class CreateUserTest {
 
     @AfterEach
     public void tearDown() {
-        userSteps.setUser(userWithFullData);
-        userSteps.deleteUser();
+        if (userWithFullDataAccessToken != null) {
+            userSteps.deleteUser(userWithFullDataAccessToken);
+        }
     }
 
     @Test
     @DisplayName("Можно создать нового пользователя")
     public void createNewUserTest(){
         userSteps.setUser(userWithFullData);
-        userSteps.createUser()
+        Response createUserWithFullData = userSteps.createUser();
+        userWithFullDataAccessToken = createUserWithFullData.jsonPath().getString("accessToken");
+        createUserWithFullData
                 .then().assertThat()
                 .statusCode(200)
                 .body("accessToken", notNullValue());
@@ -54,7 +59,9 @@ public class CreateUserTest {
     @DisplayName("Нельзя создать дубль уже существующего пользователя")
     public void createDuplicateUserTest(){
         userSteps.setUser(userWithFullData);
-        userSteps.createUser()
+        Response createUserWithFullData = userSteps.createUser();
+        userWithFullDataAccessToken = createUserWithFullData.jsonPath().getString("accessToken");
+        createUserWithFullData
                 .then().assertThat()
                 .statusCode(200);
         userSteps.createUser()

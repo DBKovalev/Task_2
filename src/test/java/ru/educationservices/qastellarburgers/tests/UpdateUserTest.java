@@ -39,18 +39,22 @@ public class UpdateUserTest {
         User secondUser = new User(ununiqueEmail, PASSWORD, NAME);
         userSteps.setUser(secondUser);
         Response createSecondUser = userSteps.createUser();
-        secondUserAccessToken = createSecondUser.path("accessToken");
+        secondUserAccessToken = createSecondUser.jsonPath().getString("accessToken");
 
         User userWithFullData = new User(uniqueEmail, PASSWORD, NAME);
         userSteps.setUser(userWithFullData);
         Response createUserWithFullData = userSteps.createUser();
-        userWithFullDataAccessToken = createUserWithFullData.path("accessToken");
+        userWithFullDataAccessToken = createUserWithFullData.jsonPath().getString("accessToken");
     }
 
     @AfterEach
     public void tearDown() {
-        userSteps.deleteUser(secondUserAccessToken);
-        userSteps.deleteUser(userWithFullDataAccessToken);
+        if (userWithFullDataAccessToken != null) {
+            userSteps.deleteUser(userWithFullDataAccessToken);
+        }
+        if (secondUserAccessToken != null) {
+            userSteps.deleteUser(secondUserAccessToken);
+        }
     }
 
     @Test

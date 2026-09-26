@@ -21,6 +21,8 @@ public class LoginUserTest {
     private String uniqueWrongEmail;
     private final UserSteps userSteps = new UserSteps();
 
+    private String userWithFullDataAccessToken;
+
     private static final String PASSWORD = "TestPassword123.";
     private static final String WRONG_PASSWORD = "WrongTestPassword123.";
     private static final String NAME = "TestName";
@@ -33,15 +35,17 @@ public class LoginUserTest {
         RestAssured.basePath = "/api/auth";
         uniqueEmail = UUID.randomUUID() + "@example.com";
         uniqueWrongEmail = UUID.randomUUID() + "@example.com";
-        userWithFullData = new User(uniqueEmail, PASSWORD, NAME);
+        User userWithFullData = new User(uniqueEmail, PASSWORD, NAME);
         userSteps.setUser(userWithFullData);
-        userSteps.createUser();
+        Response createUserWithFullData = userSteps.createUser();
+        userWithFullDataAccessToken = createUserWithFullData.jsonPath().getString("accessToken");
     }
 
     @AfterEach
     public void tearDown() {
-        userSteps.setUser(userWithFullData);
-        userSteps.deleteUser();
+        if (userWithFullDataAccessToken != null) {
+            userSteps.deleteUser(userWithFullDataAccessToken);
+        }
     }
 
     @Test

@@ -69,14 +69,4 @@ public class UserSteps {
                 .then().assertThat()
                 .statusCode(anyOf(equalTo(200), equalTo(202)));
     }
-
-    @Step("Получить токен пользователя и удалить пользователя")
-    public void deleteUser() {
-        Response loginResponse = loginUser();
-        if (loginResponse.getStatusCode() != 200) {
-            return;
-        }
-        String token = loginResponse.path("accessToken");
-        deleteUser(token);
-    }
 }
