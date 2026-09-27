@@ -55,6 +55,7 @@ public class LoginUserTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
+                .body("success", equalTo(true))
                 .body("accessToken", notNullValue());
     }
 
@@ -66,6 +67,7 @@ public class LoginUserTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_CREDENTIALS_ERROR));
     }
 
@@ -77,6 +79,7 @@ public class LoginUserTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_CREDENTIALS_ERROR));
     }
 
@@ -88,6 +91,7 @@ public class LoginUserTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_CREDENTIALS_ERROR));
     }
 
@@ -99,6 +103,7 @@ public class LoginUserTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_CREDENTIALS_ERROR));
     }
 
@@ -110,6 +115,7 @@ public class LoginUserTest {
                 .then()
                 .assertThat()
                 .statusCode(401)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_CREDENTIALS_ERROR));
     }
 }

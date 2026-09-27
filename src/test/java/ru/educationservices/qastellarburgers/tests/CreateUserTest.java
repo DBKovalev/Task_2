@@ -52,6 +52,7 @@ public class CreateUserTest {
         createUserWithFullData
                 .then().assertThat()
                 .statusCode(200)
+                .body("success", equalTo(true))
                 .body("accessToken", notNullValue());
     }
 
@@ -67,6 +68,7 @@ public class CreateUserTest {
         userSteps.createUser()
                 .then().assertThat()
                 .statusCode(403)
+                .body("success", equalTo(false))
                 .body("message", equalTo(DUPLICATE_EMAIL_ERROR));
     }
 
@@ -77,6 +79,7 @@ public class CreateUserTest {
         userSteps.createUser()
                 .then().assertThat()
                 .statusCode(403)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_REQUIRED_FIELDS_ERROR));
     }
 
@@ -87,6 +90,7 @@ public class CreateUserTest {
         userSteps.createUser()
                 .then().assertThat()
                 .statusCode(403)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_REQUIRED_FIELDS_ERROR));
     }
 
@@ -97,6 +101,7 @@ public class CreateUserTest {
         userSteps.createUser()
                 .then().assertThat()
                 .statusCode(403)
+                .body("success", equalTo(false))
                 .body("message", equalTo(MISSING_REQUIRED_FIELDS_ERROR));
     }
 }
