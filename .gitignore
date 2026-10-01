@@ -3,5 +3,6 @@
 *.idea
 
 target/
+!target/allure-results/
 
 *.allure
