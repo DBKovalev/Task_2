@@ -1,6 +1,5 @@
 package ru.educationservices.qastellarburgers.tests;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,6 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginUserTest {
 
-    private User userWithFullData;
     private String uniqueEmail;
     private String uniqueWrongEmail;
     private final UserSteps userSteps = new UserSteps();
@@ -31,8 +29,6 @@ public class LoginUserTest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = "https://qa-stellarburgers.education-services.ru";
-        RestAssured.basePath = "/api/auth";
         uniqueEmail = UUID.randomUUID() + "@example.com";
         uniqueWrongEmail = UUID.randomUUID() + "@example.com";
         User userWithFullData = new User(uniqueEmail, PASSWORD, NAME);

@@ -1,6 +1,5 @@
 package ru.educationservices.qastellarburgers.tests;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +30,6 @@ public class UpdateUserTest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = "https://qa-stellarburgers.education-services.ru";
-        RestAssured.basePath = "/api/auth";
         String uniqueEmail = UUID.randomUUID() + "@example.com";
         ununiqueEmail = UUID.randomUUID() + "@example.com";
 

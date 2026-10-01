@@ -9,6 +9,8 @@ import ru.educationservices.qastellarburgers.Order;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.educationservices.qastellarburgers.config.Config.SPEC;
+
 public class OrderSteps {
 
     private Order order;
@@ -22,53 +24,53 @@ public class OrderSteps {
     @Step("Создать заказ с авторизацией по токену")
     public Response createOrderWithToken(String accessToken) {
         return RestAssured.given()
-                .header("Content-type", "application/json")
+                .spec(SPEC)
                 .header("Authorization", accessToken)
                 .body(gson.toJson(order))
                 .when()
-                .post("/orders");
+                .post("/api/orders");
     }
 
     @Step("Создать заказ без авторизации по токену")
     public Response createOrderWithoutToken() {
         return RestAssured.given()
-                .header("Content-type", "application/json")
+                .spec(SPEC)
                 .body(gson.toJson(order))
                 .when()
-                .post("/orders");
+                .post("/api/orders");
     }
 
     @Step("Получить заказы конкретного пользователя по токену")
     public Response getOrdersWithToken(String accessToken) {
         return RestAssured.given()
-                .header("Content-type", "application/json")
+                .spec(SPEC)
                 .header("Authorization", accessToken)
                 .when()
-                .get("/orders");
+                .get("/api/orders");
     }
 
     @Step("Получить заказы конкретного пользователя без передачи токена")
     public Response getOrdersWithoutToken() {
         return RestAssured.given()
-                .header("Content-type", "application/json")
+                .spec(SPEC)
                 .when()
-                .get("/orders");
+                .get("/api/orders");
     }
 
     @Step("Получить последние 50 заказов без токена")
     public Response getLast50OrdersWithoutToken() {
         return RestAssured.given()
-                .header("Content-type", "application/json")
+                .spec(SPEC)
                 .when()
-                .get("/orders/all");
+                .get("/api/orders/all");
     }
 
     @Step("Получить ингредиенты")
     public List<String> getIngredients() {
         return RestAssured.given()
-                .header("Content-type", "application/json")
+                .spec(SPEC)
                 .when()
-                .get("/ingredients")
+                .get("/api/ingredients")
                 .then()
                 .extract()
                 .jsonPath()
